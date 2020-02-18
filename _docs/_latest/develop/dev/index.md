@@ -28,7 +28,3 @@ Create your own GCP API clients, so that Forseti can interact with GCP.
 
 Create your own Forseti Scanner rules to check different types of data to
 make sure it's securely configured.
-
-**[Testing Your Changes]({% link _docs/latest/develop/dev/testing.md %})**
-
-Learn how to build protos and run unit tests for your Forseti contributions.

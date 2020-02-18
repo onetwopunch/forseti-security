@@ -23,6 +23,10 @@ GitHub.
 
 Get set up and started with development.
 
+**[Start Testing on Forseti]({% link _docs/latest/develop/test/index.md %})**
+
+Get set up and start writing tests.
+
 **[Install, Build, and Run Forseti Website]({% link _docs/latest/develop/website.md %})**
 
 Install, build, edit, and run the Forseti website locally.
