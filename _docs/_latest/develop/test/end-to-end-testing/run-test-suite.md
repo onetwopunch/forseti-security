@@ -1,6 +1,6 @@
 ---
-title: Run The End-to-end Test Suite
-order: 402
+title: Run Test Suite
+order: 205
 ---
 
 # {{ page.title }}
