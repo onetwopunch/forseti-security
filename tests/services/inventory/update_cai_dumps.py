@@ -282,6 +282,24 @@ def kubernetes_service(item):
                     item['metadata']['namespace']))
     return _create_asset(name, asset_type, parent_name, item.data(), None)
 
+def logging_sink(item):
+    parent = item.parent()
+    name = '//logging.googleapis.com/projects/{}/sinks/{}'.format(
+        parent['projectNumber'], item['data']['sink'])
+    asset_type = 'logging.googleapis.com/LogSink'
+    parent_name = '//logging.googleapis.com/projects/{}'.format(
+        parent['projectNumber'])
+    return _create_asset(asset_type, parent_name, item.data(), None)
+
+def service(item):
+    parent = item.parent()
+    name = '//serviceusage.googleapis.com/projects/{}/services/{}'.format(
+        parent['projectNumber'], item['data']['name'])
+    asset_type = 'serviceusage.googleapis.com/Service'
+    parent_name = '//cloudresourcemanager.googleapis.com/projects/{}'.format(
+        parent['projectNumber'])
+    return _create_asset(name, asset_type, parent_name, item.data(), None)
+
 
 def _create_compute_asset(item, asset_type):
     parent = item.parent()
@@ -375,6 +393,7 @@ CAI_TYPE_MAP = {
     'interconnect_attachment': interconnect_attachment,
     'kubernetes_cluster': kubernetes_cluster,
     'kubernetes_service': kubernetes_service,
+    'logging_sink': logging_sink,
     'network': network,
     'role': role,
     'service': service,

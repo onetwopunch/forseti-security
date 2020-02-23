@@ -2676,6 +2676,7 @@ class ApiClientImpl(ApiClient):
         raise ResourceNotSupported('Kubernetes resources are not supported '
                                    'by this API client')
 
+
     def fetch_pubsub_subscription_iam_policy(self, name):
         """PubSub Subscription IAM policy from gcp API call.
 

@@ -1634,6 +1634,25 @@ class CaiApiClientImpl(gcp.ApiClientImpl):
         for keyring in resources:
             yield keyring
 
+    def iter_stackdriver_project_sinks(self, project_number):
+        """Iterate KMS Keyrings in a project from Cloud Asset data.
+
+        Args:
+            project_id (str): id of the project to query.
+            location (str): The location to query. Not required when
+                using Cloud Asset API.
+
+        Yields:
+            dict: Generator of KMS Keyring resources
+        """
+        resources = self.dao.iter_cai_assets(
+            ContentTypes.resource,
+            'logging.googleapis.com/LogSink',
+            '//logging.googleapis.com/projects/{}'.format(project_number),
+            self.engine)
+        for logsink in resources:
+            yield logsink
+
     def fetch_pubsub_subscription_iam_policy(self, name):
         """PubSub Subscription IAM policy from Cloud Asset data.
 

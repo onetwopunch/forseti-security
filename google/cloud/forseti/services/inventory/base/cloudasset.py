@@ -96,6 +96,7 @@ DEFAULT_ASSET_TYPES = [
     'k8s.io/Service',
     'iam.googleapis.com/ServiceAccount',
     'iam.googleapis.com/ServiceAccountKey',
+    'logging.googleapis.com/LogSink'
     'pubsub.googleapis.com/Subscription',
     'pubsub.googleapis.com/Topic',
     'rbac.authorization.k8s.io/ClusterRole',
