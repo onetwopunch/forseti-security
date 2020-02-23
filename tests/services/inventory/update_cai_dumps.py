@@ -232,6 +232,16 @@ def service(item):
     return _create_asset(name, asset_type, parent_name, item.data(), None)
 
 
+def datafusion_instance(item):
+    parent = item.parent()
+    name = '//datafusion.googleapis.com/projects/{}/instances/{}'.format(
+        parent['projectNumber'], item['data']['name'])
+    asset_type = 'serviceusage.googleapis.com/Service'
+    parent_name = '//serviceusage.googleapis.com/projects/{}/locations/{}'.format(
+        parent['projectNumber'])
+    return _create_asset(name, asset_type, parent_name, item.data(), None)
+
+
 def serviceaccount(item):
     parent = item.parent()
     name = '//iam.googleapis.com/projects/{}/serviceAccounts/{}'.format(
@@ -362,6 +372,7 @@ CAI_TYPE_MAP = {
     'backendservice': backendservice,
     'compute_project': compute_project,
     'cloudsqlinstance': cloudsqlinstance,
+    'datafusion_instance': datafusion_instance,
     'dataset': bigquery_dataset,
     'disk': disk,
     'firewall': firewall,

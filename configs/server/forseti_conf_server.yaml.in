@@ -197,6 +197,7 @@ inventory:
         #    - compute.googleapis.com/UrlMap
         #    - compute.googleapis.com/VpnTunnel
         #    - container.googleapis.com/Cluster
+        #    - datafusion.googleapis.com/Instance
         #    - dataproc.googleapis.com/Cluster
         #    - dataproc.googleapis.com/Job
         #    - dns.googleapis.com/ManagedZone

@@ -982,6 +982,26 @@ class CaiApiClientImpl(gcp.ApiClientImpl):
         for folder in resources:
             yield folder
 
+    def iter_datafusion_instances(self, project_number):
+        """Iterate data fusion instances from Cloud Asset data.
+
+        Args:
+            project_number (str): number of the project to query.
+            location (str): The location the instance is in.
+
+        Yields:
+            dict: Generator of instances.
+        """
+        resources = self.dao.iter_cai_assets(
+            ContentTypes.resource,
+            'datafusion.googleapis.com/Instance',
+            '//datafusion.googleapis.com/projects/{}'.format(
+                project_number),
+            self.engine)
+
+        for instance in resources:
+            yield instance
+
     def iter_serviceusage_services(self, project_number):
         """Iterate Services from Cloud Asset data.
 

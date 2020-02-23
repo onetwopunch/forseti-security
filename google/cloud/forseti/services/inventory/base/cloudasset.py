@@ -86,6 +86,7 @@ DEFAULT_ASSET_TYPES = [
     'compute.googleapis.com/UrlMap',
     'compute.googleapis.com/VpnTunnel',
     'container.googleapis.com/Cluster',
+    'datafusion.googleapis.com/Instance'
     'dataproc.googleapis.com/Cluster',
     'dns.googleapis.com/ManagedZone',
     'dns.googleapis.com/Policy',

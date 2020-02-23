@@ -615,6 +615,15 @@ class ApiClient(with_metaclass(abc.ABCMeta, object)):
         """
 
     @abc.abstractmethod
+    def iter_datafusion_instances(self, project_number):
+        """Iterate data fusion instances from Cloud Asset data.
+
+        Args:
+            project_number (str): number of the project to query.
+            location (str): The location the instance is in.
+        """
+
+    @abc.abstractmethod
     def fetch_dataproc_cluster_iam_policy(self, cluster):
         """Fetch Dataproc Cluster IAM Policy from GCP API.
 
@@ -2228,6 +2237,16 @@ class ApiClientImpl(ApiClient):
         """
         for folder in self.crm.get_folders(parent_id):
             yield folder, None
+
+    def iter_datafusion_instances(self, project_number):
+        """Iterate data fusion instances from Cloud Asset data.
+
+        Args:
+            project_number (str): number of the project to query.
+            location (str): The location the instance is in.
+        """
+        raise ResourceNotSupported('Cloud Datafusion Instances are not '
+                                   'supported by this API client')
 
     def fetch_dataproc_cluster_iam_policy(self, cluster):
         """Fetch Dataproc Cluster IAM Policy from GCP API.

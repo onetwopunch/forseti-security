@@ -1436,6 +1436,11 @@ class ComputeVpnTunnel(resource_class_factory('compute_vpntunnel', 'id')):
     """The Resource implementation for Compute VpnTunnel."""
 
 
+class DataFusionInstance(resource_class_factory('datafusion_instance', 'name',
+                                                hash_key=True)):
+    """The Resource implementation for Datafusion Instance."""
+
+
 # Cloud Dataproc resource classes
 class DataprocCluster(resource_class_factory('dataproc_cluster',
                                              'clusterUuid')):
@@ -2466,6 +2471,13 @@ class ComputeVpnTunnelIterator(compute_iter_class_factory(
     """The Resource iterator implementation for Compute VpnTunnel."""
 
 
+class DataFusionInstanceIterator(resource_iter_class_factory(
+        api_method_name='iter_datafusion_instances',
+        resource_name='datafusion_instance',
+        api_method_arg_key='projectNumber')):
+    """The Resource iterator implementation for Datafusion Instance."""
+
+
 class DataprocClusterIterator(resource_iter_class_factory(
         api_method_name='iter_dataproc_clusters',
         resource_name='dataproc_cluster',
@@ -2987,6 +2999,7 @@ FACTORIES = {
             ComputeTargetVpnGatewayIterator,
             ComputeUrlMapIterator,
             ComputeVpnTunnelIterator,
+            DataFusionInstanceIterator,
             DataprocClusterIterator,
             DnsManagedZoneIterator,
             DnsPolicyIterator,
@@ -3268,6 +3281,11 @@ FACTORIES = {
     'crm_service_perimeter': ResourceFactory({
         'dependsOn': ['crm_access_policy'],
         'cls': ResourceManagerServicePerimeter,
+        'contains': []}),
+
+    'datafusion_instance': ResourceFactory({
+        'dependsOn': ['project'],
+        'cls': DataFusionInstance,
         'contains': []}),
 
     'dataproc_cluster': ResourceFactory({
