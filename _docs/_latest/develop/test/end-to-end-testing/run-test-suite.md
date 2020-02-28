@@ -12,16 +12,63 @@ contributions on your local development environment.
 
 - Create a new project in the organization. 
 - Terraform uses an IAM Service Account to deploy and configure resources on 
-behalf of the user. You can create the Service Account and grant the necessary
-roles/permissions or run the helper script that does it for you. To create the service account by 
-running the helper script, `Billing Account Administrator` role needs to be granted to 
-the admin account. This permission is only required to create the Service 
-Account, and can be revoked afterwards.
-- If you are creating Service Account by running the helper script, most of the
-necessary roles will be granted and APIs will be enabled by default. You can run
-the helper script by running the following command:
+behalf of the user. You can run the [helper script](https://github.com/terraform-google-modules/terraform-google-project-factory/blob/master/helpers/setup-sa.sh) 
+to create the Service Account, grant the necessary roles to the Service Account, 
+and enable the necessary APIs in the project.
+- In order to execute this script, you must have an account with the following 
+list of permissions: 
+* resourcemanager.organizations.list
+* resourcemanager.projects.list
+* billing.accounts.list
+* iam.serviceAccounts.create
+* iam.serviceAccountKeys.create
+* resourcemanager.organizations.setIamPolicy
+* resourcemanager.projects.setIamPolicy
+* serviceusage.services.enable on the project
+* servicemanagement.services.bind on following services:
+  * cloudresourcemanager.googleapis.com
+  * cloudbilling.googleapis.com
+  * iam.googleapis.com
+  * admin.googleapis.com
+  * appengine.googleapis.com
+* billing.accounts.getIamPolicy on a billing account.
+* billing.accounts.setIamPolicy on a billing account.
+- `Billing Account Administrator` role to the admin account to be able to
+create the Service Account using the helper script. You can revoke this role
+after the service account is created.
+- Run the script as follows:
 
 `./helpers/setup-sa.sh <ORGANIZATION_ID> <PROJECT_NAME> [BILLING_ACCOUNT]`
+
+- Alternatively, you can grant the following roles and enable the APIs manually.
+
+On the organization:
+
+* roles/resourcemanager.organizationAdmin
+* roles/iam.securityReviewer
+
+On the project:
+
+* roles/owner
+* roles/compute.instanceAdmin
+* roles/compute.networkViewer
+* roles/compute.securityAdmin
+* roles/iam.serviceAccountAdmin
+* roles/serviceusage.serviceUsageAdmin
+* roles/iam.serviceAccountUser
+* roles/storage.admin
+* roles/cloudsql.admin
+
+For this module to work, you need the following APIs enabled on the Forseti project.
+
+* cloudresourcemanager.googleapis.com
+* compute.googleapis.com
+* serviceusage.googleapis.com
+
+On the host project (when using shared VPC)
+
+* roles/compute.securityAdmin
+* roles/compute.networkAdmin
 
 - If you are not using the helper script, you will need to grant
 the roles and enable the APIs documented on the [Terraform Google Forseti 
@@ -54,7 +101,6 @@ TF_VAR_billing_account -e TF_VAR_domain
 - Run `kitchen create --test-base-path="integration_tests/tests"`. This is similar 
 to terraform init and should be run once in the beginning and whenever there 
 are configuration/provider changes.
-
 
 - Run `kitchen converge --test-base-path="integration_tests/tests"` to setup the 
 test environment, deploy Forseti and create the resources in the test 
