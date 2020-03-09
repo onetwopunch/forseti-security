@@ -1,6 +1,6 @@
 ---
 title: Get Help
-order: 500
+order: 100
 ---
 
 # {{ page.title }}
