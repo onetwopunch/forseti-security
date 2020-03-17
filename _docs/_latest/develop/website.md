@@ -1,6 +1,6 @@
 ---
 title: Run Website Locally
-order: 200
+order: 100
 ---
 
 #  {{ page.title }}
