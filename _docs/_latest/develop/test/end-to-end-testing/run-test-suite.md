@@ -1,20 +1,21 @@
 ---
-title: Run Test Suite
+title: Run The Test Suite
 order: 045
 ---
 
 # {{ page.title }}
 
 This page describes how to run the end-to-end test suite for your Forseti
-contributions on your local development environment. 
+contributions on your local dev environment. 
 
 ## Set up your development environment and run the test suite
 
-- Create a new project in the organization. 
+- Create a new project in the organization.
 - Terraform uses an IAM Service Account to deploy and configure resources on 
-behalf of the user. You can run the [helper script](https://github.com/terraform-google-modules/terraform-google-project-factory/blob/master/helpers/setup-sa.sh) 
-to create the Service Account, grant the necessary roles to the Service Account, 
-and enable the necessary APIs in the project.
+behalf of the user. You can create the Service account, and grant the necessary 
+roles to the Service Account manually or by running a helper script. 
+
+### Create Service Account by running the helper script:
 - In order to execute this script, you must have an account with the following 
 list of permissions: 
 * resourcemanager.organizations.list
@@ -33,19 +34,27 @@ list of permissions:
   * appengine.googleapis.com
 * billing.accounts.getIamPolicy on a billing account.
 * billing.accounts.setIamPolicy on a billing account.
-- `Billing Account Administrator` role to the admin account to be able to
-create the Service Account using the helper script. You can revoke this role
-after the service account is created.
-- Run the script as follows:
+- `Billing Account Administrator` role should be granted to the admin account to 
+be able to create the Service Account using the helper script. You can revoke 
+this role after the service account is created.
+- To run the [helper script](https://github.com/terraform-google-modules/terraform-google-project-factory/blob/master/helpers/setup-sa.sh), 
+clone the [Terraform Google Project factory repository](https://github.com/terraform-google-modules/terraform-google-project-factory)
+and run the following command:
 
-`./helpers/setup-sa.sh <ORGANIZATION_ID> <PROJECT_NAME> [BILLING_ACCOUNT]`
+`./helpers/setup-sa.sh <ORGANIZATION_ID> <PROJECT_NAME> <BILLING_ACCOUNT>`
 
-- Alternatively, you can grant the following roles and enable the APIs manually.
+### Create service account and grant the roles manually
+
+Alternatively, you can grant the following roles and enable the APIs manually.
 
 On the organization:
 
 * roles/resourcemanager.organizationAdmin
 * roles/iam.securityReviewer
+* roles/resourcemanager.folderViewer
+* roles/resourcemanager.organizationViewer
+* roles/resourcemanager.projectCreator
+* roles/billing.user
 
 On the project:
 
@@ -59,34 +68,54 @@ On the project:
 * roles/storage.admin
 * roles/cloudsql.admin
 
-For this module to work, you need the following APIs enabled on the Forseti project.
+Enable the following APIs on the Forseti project:
 
 * cloudresourcemanager.googleapis.com
 * compute.googleapis.com
 * serviceusage.googleapis.com
 
-On the host project (when using shared VPC)
+On the host project when using shared VPC
 
 * roles/compute.securityAdmin
 * roles/compute.networkAdmin
+* roles/browser
+* roles/resourcemanager.projectIamAdmin
 
-- If you are not using the helper script, you will need to grant
-the roles and enable the APIs documented on the [Terraform Google Forseti 
-repository](https://github.com/forseti-security/terraform-google-forseti#service-account) 
-and [Terraform Google Project Factory repository](https://github.com/terraform-google-modules/terraform-google-project-factory#permissions)
-to the Service Account.
+On the organization when using shared VPC
 
+* roles/compute.securityAdmin
+* roles/compute.networkAdmin
+* roles/compute.xpnAdmin
+
+### Set the environment variables and run the test suite
 - Set the following environment variables from bash shell:
 ```
+export SERVICE_ACCOUNT_JSON=<JSON_KEY_OF_THE_NEWLY_CREATED_SERVICE_ACCOUNT> \
+
 export TF_VAR_billing_account=<YOUR_BILLING_ACCOUNT> \
 
 export TF_VAR_domain=<YOUR_DOMAIN> \
+
+export TF_VAR_forseti_email_recipient=<EMAIL_RECIPIENT> \
+
+export TF_VAR_forseti_email_sender=<EMAIL_SENDER> \ 
+
+export TF_VAR_forseti_version=<BRANCH_NAME> \ 
+
+export TF_VAR_gsuite_admin_email=<GSUITE_EMAIL_ADDRESS> \
+
+export TF_VAR_inventory_performance_cai_dump_paths=<PATH_TO_CAI_DUMP> \
+
+export TF_VAR_kms_key=<KMS_KEY> \
+
+export TF_VAR_kms_keyring=<KMS_KEYRING> \ 
 
 export TF_VAR_org_id=<YOUR_ORGANIZATION_ID> \
 
 export TF_VAR_project_id=<YOUR_PROJECT_ID> \
 
-export SERVICE_ACCOUNT_JSON=<SERVICE_ACCOUNT_KEY>
+export TF_VAR_sendgrid_api_key=<SENDGRID_API_KEY>
+
 ```
 - Run the following command after setting the above environment variables:
 
@@ -98,9 +127,9 @@ TF_VAR_billing_account -e TF_VAR_domain
 /bin/bash
 ```
 
-- Run `kitchen create --test-base-path="integration_tests/tests"`. This is similar 
-to terraform init and should be run once in the beginning and whenever there 
-are configuration/provider changes.
+- Run `kitchen create --test-base-path="integration_tests/tests"`. This is 
+similar to terraform init and should be run once in the beginning, and whenever 
+there are configuration/provider changes.
 
 - Run `kitchen converge --test-base-path="integration_tests/tests"` to setup the 
 test environment, deploy Forseti and create the resources in the test 
