@@ -8,14 +8,14 @@ order: 045
 This page describes how to run the end-to-end test suite for your Forseti
 contributions on your local dev environment. 
 
-## Set up your development environment and run the test suite
+## Setting up development environment
 
 - Create a new project in the organization.
 - Terraform uses an IAM Service Account to deploy and configure resources on 
 behalf of the user. You can create the Service account, and grant the necessary 
 roles to the Service Account manually or by running a helper script. 
 
-### Create Service Account by running the helper script:
+### Creating Service Account by running the helper script:
 - In order to execute this script, you must have an account with the following 
 list of permissions: 
 * resourcemanager.organizations.list
@@ -43,7 +43,7 @@ and run the following command:
 
 `./helpers/setup-sa.sh <ORGANIZATION_ID> <PROJECT_NAME> <BILLING_ACCOUNT>`
 
-### Create service account and grant the roles manually
+### Creating service account and granting roles manually
 
 Alternatively, you can grant the following roles and enable the APIs manually.
 
@@ -87,7 +87,7 @@ On the organization when using shared VPC
 * roles/compute.networkAdmin
 * roles/compute.xpnAdmin
 
-### Set the environment variables and run the test suite
+### Setting up environment variables
 - Set the following environment variables from bash shell:
 ```
 export SERVICE_ACCOUNT_JSON=<JSON_KEY_OF_THE_NEWLY_CREATED_SERVICE_ACCOUNT> \
@@ -117,7 +117,9 @@ export TF_VAR_project_id=<YOUR_PROJECT_ID> \
 export TF_VAR_sendgrid_api_key=<SENDGRID_API_KEY>
 
 ```
-- Run the following command after setting the above environment variables:
+## Running the test suite
+
+- Run the following command after setting the environment variables:
 
 ```
 docker container run -it -e KITCHEN_TEST_BASE_PATH="integration_tests/tests" -e 
@@ -128,8 +130,8 @@ TF_VAR_billing_account -e TF_VAR_domain
 ```
 
 - Run `kitchen create --test-base-path="integration_tests/tests"`. This is 
-similar to terraform init and should be run once in the beginning, and whenever 
-there are configuration/provider changes.
+similar to `terraform init`, and should be run once in the beginning, and 
+whenever there are configuration/provider changes.
 
 - Run `kitchen converge --test-base-path="integration_tests/tests"` to setup the 
 test environment, deploy Forseti and create the resources in the test 
