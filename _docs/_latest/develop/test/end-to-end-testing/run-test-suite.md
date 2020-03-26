@@ -1,5 +1,5 @@
 ---
-title: Run The Test Suite
+title: Run The Test Suite Locally
 order: 045
 ---
 
@@ -8,15 +8,16 @@ order: 045
 This page describes how to run the end-to-end test suite for your Forseti
 contributions on your local dev environment. 
 
-## Setting up development environment
+## **Setting up development environment**
 
-- Create a new project in the organization.
+- Create a new project in your organization.
 - Terraform uses an IAM Service Account to deploy and configure resources on 
 behalf of the user. You can create the Service account, and grant the necessary 
 roles to the Service Account manually or by running a helper script. 
 
-### Creating Service Account by running the helper script:
-- In order to execute this script, you must have an account with the following 
+### **Creating Service Account by running the helper script**
+
+In order to execute this script, you must have an account with the following 
 list of permissions: 
 * resourcemanager.organizations.list
 * resourcemanager.projects.list
@@ -43,7 +44,7 @@ and run the following command:
 
 `./helpers/setup-sa.sh <ORGANIZATION_ID> <PROJECT_NAME> <BILLING_ACCOUNT>`
 
-### Creating service account and granting roles manually
+### **Creating Service Account and granting roles manually**
 
 Alternatively, you can grant the following roles and enable the APIs manually.
 
@@ -87,8 +88,10 @@ On the organization when using shared VPC
 * roles/compute.networkAdmin
 * roles/compute.xpnAdmin
 
-### Setting up environment variables
-- Set the following environment variables from bash shell:
+### **Setting up environment variables**
+
+Set the following environment variables from the bash shell:
+
 ```
 export SERVICE_ACCOUNT_JSON=<JSON_KEY_OF_THE_NEWLY_CREATED_SERVICE_ACCOUNT> \
 
@@ -117,9 +120,10 @@ export TF_VAR_project_id=<YOUR_PROJECT_ID> \
 export TF_VAR_sendgrid_api_key=<SENDGRID_API_KEY>
 
 ```
-## Running the test suite
 
-- Run the following command after setting the environment variables:
+## **Running the test suite**
+
+Run the following command after setting up environment variables:
 
 ```
 docker container run -it -e KITCHEN_TEST_BASE_PATH="integration_tests/tests" -e 

@@ -27,10 +27,6 @@ Get set up and started with development.
 
 Get set up and start writing tests.
 
-**[Install, Build, and Run Forseti Website]({% link _docs/latest/develop/website.md %})**
-
-Install, build, edit, and run the Forseti website locally.
-
 **[Get Help Developing on Forseti]({% link _docs/latest/use/get-help.md %})**
 
 Find the best way to get help with development.

@@ -9,7 +9,7 @@ This page describes how to add end-to-end tests for your Forseti contributions.
 
 ---
 
-## Overview
+## **Overview**
 
 The tech stack used to run Forseti end-to-end tests consists of Kitchen, Kitchen 
 Terraform, InSpec and Google Cloud Build.
@@ -39,7 +39,7 @@ as Docker containers or Java archives.
 Integration tests are hosted in the [forseti-security repository](https://github.com/forseti-security/forseti-security/tree/master/integration_tests/tests/forseti). 
 InSpec framework is used to write integration tests.
 
-## Adding an end-to-end test
+## **Adding an end-to-end test**
 
 - End-to-end tests are enclosed in a `describe` block. Multiple `describe`
 blocks are usually grouped together in a `control`. [Determine if a control 
@@ -59,13 +59,14 @@ in the scope of a test.
 [outputs.tf](https://github.com/forseti-security/forseti-security/blob/master/integration_tests/fixtures/forseti/outputs.tf) 
 and [inspec.yml](https://github.com/forseti-security/forseti-security/blob/master/integration_tests/tests/forseti/inspec.yml).
 - Commands executed to set the ground should be placed in the `before` block.
-- Commands run as clean up activity after the tests are executed such as 
-deleting inventory, model should be placed in the `after` block.
-- When using a matcher, the expected result is the value the matcher will 
-compare against the property being accessed. Assertions can be made on `stdout`, 
-`stderr`, `exit_status` to name a few.
+- In the `describe` block, you can also test for a command that should/should not
+exist. 
+- Commands that are executed for clean-up purposes such as deleting inventory
+and model should be placed in the `after` block. 
+- You can make assertions against standard output (stdout), standard 
+error (stderr), exist status code (exit_status) to name a few.
 
-## What's next
+## **What's next**
 
-* Learn the [basic syntax to add an InSpec test](https://www.inspec.io/docs/reference/glossary/).
+* Learn the [basic syntax to add an end-to-end test using the InSpec framework](https://www.inspec.io/docs/reference/glossary/).
 * Learn how to [run the test suite]({% link _docs/latest/develop/test/end-to-end-testing/run-test-suite.md %}).

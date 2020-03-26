@@ -14,7 +14,14 @@ and then test those changes.
 
 Learn how to build protos and run unit tests for your Forseti contributions.
 
-**[Add and run end-to-end tests]({% link _docs/latest/develop/test/end-to-end-testing/index.md %})**
+**[Add an end-to-end tests]({% link _docs/latest/develop/test/end-to-end-testing/index.md %})**
 
-Learn how to add end-to-end tests for your Forseti contributions and run it on 
-your local development environment.
+Learn how to add end-to-end tests for your Forseti contributions.
+
+**[Add an end-to-end test suite]({% link _docs/latest/develop/test/run-website-locally/index.md %})**
+
+Learn how to run the end-to-end test suite on your local development environment.
+
+**[Install, Build, and Run Forseti Website]({% link _docs/latest/develop/website.md %})**
+
+Install, build, edit, and run the Forseti website locally.
