@@ -5,7 +5,7 @@ order: 045
 
 # {{ page.title }}
 
-This page describes how to run the end-to-end test suite for your Forseti
+This page describes how to run the integration test suite for your Forseti
 contributions on your local dev environment. 
 
 ## **Setting up development environment**

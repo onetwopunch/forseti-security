@@ -5,13 +5,12 @@ order: 044
 
 # {{ page.title }}
 
-This page describes how to add end-to-end tests for your Forseti contributions.
+This page describes how to add integration tests for your Forseti contributions.
 
 ---
-
 ## **Overview**
 
-The tech stack used to run Forseti end-to-end tests consists of Kitchen, Kitchen 
+The tech stack used to run Forseti integration tests consists of Kitchen, Kitchen 
 Terraform, InSpec and Google Cloud Build.
 
 [Kitchen](https://kitchen.ci/) provides a test harness to execute infrastructure 
@@ -39,9 +38,9 @@ as Docker containers or Java archives.
 Integration tests are hosted in the [forseti-security repository](https://github.com/forseti-security/forseti-security/tree/master/integration_tests/tests/forseti). 
 InSpec framework is used to write integration tests.
 
-## **Adding an end-to-end test**
+## **Adding an integration test**
 
-- End-to-end tests are enclosed in a `describe` block. Multiple `describe`
+- Integration tests are enclosed in a `describe` block. Multiple `describe`
 blocks are usually grouped together in a `control`. [Determine if a control 
 already exists](https://github.com/forseti-security/forseti-security/tree/master/integration_tests/tests/forseti/controls) 
 for the module associated with your Forseti contributions.
@@ -61,12 +60,12 @@ and [inspec.yml](https://github.com/forseti-security/forseti-security/blob/maste
 - Commands executed to set the ground should be placed in the `before` block.
 - In the `describe` block, you can also test for a command that should/should not
 exist. 
+- You can also make assertions against standard output (stdout), standard 
+error (stderr), exist status code (exit_status) to name a few.
 - Commands that are executed for clean-up purposes such as deleting inventory
 and model should be placed in the `after` block. 
-- You can make assertions against standard output (stdout), standard 
-error (stderr), exist status code (exit_status) to name a few.
 
 ## **What's next**
 
-* Learn the [basic syntax to add an end-to-end test using the InSpec framework](https://www.inspec.io/docs/reference/glossary/).
-* Learn how to [run the test suite]({% link _docs/latest/develop/test/end-to-end-testing/run-test-suite.md %}).
+* Learn the [basic syntax to add an integration test using the InSpec framework](https://www.inspec.io/docs/reference/glossary/).
+* Learn how to [run the test suite]({% link _docs/latest/develop/test/integration-testing/run-test-suite.md %}).
